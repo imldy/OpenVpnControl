@@ -1,0 +1,12 @@
+[Unit]
+Description=fas
+After=network.target
+After=mariadb.service
+[Service]
+Type=forking
+ExecStart=/bin/bash /bin/vpn service_start
+ExecReload=/bin/bash /bin/vpn service_restart
+ExecStop=/bin/bash /bin/vpn service_stop
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target

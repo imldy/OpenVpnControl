@@ -1,0 +1,3 @@
+#!/bin/bash
+source /etc/openvpn/auth_config.conf
+mysql -h$mysql_host -P$mysql_port -u$mysql_user -p$mysql_pass -N -e "use $mysql_data;update openvpn set online=0 where iuser=\"$1\";"

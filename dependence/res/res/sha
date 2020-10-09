@@ -1,0 +1,4 @@
+(sleep 1;
+echo kill "$1";
+sleep 1;
+)|telnet localhost $2
