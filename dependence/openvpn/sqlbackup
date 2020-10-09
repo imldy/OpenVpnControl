@@ -1,0 +1,23 @@
+#!/bin/bash
+#一小时自动备份数据库插件，请勿手动运行此文件
+if [ ! -f /etc/openvpn/auth_config.conf ]; then
+echo "auth_config.conf配置文件不存在，无法为您备份数据库，请检查配置文件！"
+cat >> /etc/openvpn/sqlbackup_log.txt <<EOF
+`date +%Y年%m月%d日%H时%M分%S秒`数据库备份失败！原因：auth_config.conf配置文件不存在，无法为您备份数据库，请检查配置文件！
+EOF
+exit;0
+fi
+source /etc/openvpn/auth_config.conf
+mkdir /root/backup >/dev/null 2>&1
+rm -rf /root/backup/*.sql >/dev/null 2>&1
+mysqldump -h${mysql_host} -P${mysql_port} -u${mysql_user} -p${mysql_pass} ${mysql_data} > /root/backup/mysql_${mysql_data}_backup.sql
+if [ ! -f /root/backup/mysql_${mysql_data}_backup.sql ]; then
+	cat >> /etc/openvpn/sqlbackup_log.txt <<EOF
+`date +%Y年%m月%d日%H时%M分%S秒`数据库${mysql_data}表备份失败！
+EOF
+	else
+	cat >> /etc/openvpn/sqlbackup_log.txt <<EOF
+`date +%Y年%m月%d日%H时%M分%S秒`数据库${mysql_data}表备份成功！
+EOF
+fi
+exit;0

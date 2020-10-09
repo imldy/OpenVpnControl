@@ -1,0 +1,32 @@
+#!/bin/bash
+#此功能由何以潇编写
+#QQ：1744744000
+echo
+echo "加载中..."
+sleep 3
+if [ ! -f /etc/openvpn/auth_config.conf ]; then
+echo "auth_config.conf配置文件不存在，无法为您备份数据库，请检查配置文件！"
+exit;0
+fi
+source /etc/openvpn/auth_config.conf
+echo
+echo -e "您需要备份您的"${mysql_data}"数据库吗？(此功能仅对FAS系统有效) [y/n]"
+echo
+read -p "请输入：" mode
+if [[ ${mode} == "y" || ${mode} == "Y" ]]; then
+rm -rf /root/用户备份${mysql_data}.sql >/dev/null 2>&1
+mysqldump -h${mysql_host} -P${mysql_port} -u${mysql_user} -p${mysql_pass} ${mysql_data} > /root/用户备份${mysql_data}.sql
+if [ ! -f /root/用户备份${mysql_data}.sql ]; then
+echo
+echo "备份失败，请联系何以潇QQ：943756780 处理！"
+else
+echo
+echo "数据库"${mysql_data}"已成功备份在/root/用户备份"${mysql_data}".sql"
+fi
+exit;0
+else
+echo
+echo "用户取消备份"${mysql_data}"数据库！"
+exit;0
+fi
+exit;0

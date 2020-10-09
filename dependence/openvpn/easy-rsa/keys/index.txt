@@ -1,0 +1,2 @@
+V	270219033744Z		01	unknown	/C=CN/ST=CA/L=SanFrancisco/O=Fort-Funston/OU=www.dingd.cn/CN=server/name=EasyRSA/emailAddress=admin@dingd.cn
+V	270219034814Z		02	unknown	/C=CN/ST=CA/L=SanFrancisco/O=Fort-Funston/OU=www.dingd.cn/CN=client/name=EasyRSA/emailAddress=admin@dingd.cn

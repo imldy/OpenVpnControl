@@ -1,0 +1,6 @@
+#!/bin/bash
+#何以潇QQ：1744744000
+rm -rf /var/www/FAS.lock
+echo "FAS系统后台防黑验证文件，请勿删除或修改！何以潇QQ：1744744000">>/var/www/FAS.lock
+echo -e "\033[34mFAS后台管理登录关闭成功！\033[0m"
+exit;
