@@ -605,6 +605,8 @@ echo "1、官方云数据中心（推荐）"
 echo 
 echo "2、阿里云数据中心（关闭）"
 echo
+echo "3、官方云数据中心2（试用）"
+echo
 read -p "请输入: " k
 echo
 if [[ $k == 1 ]];then
@@ -614,6 +616,10 @@ fi
 if [[ $k == 2 ]];then
 Download_host='';
 YUM_Choice='阿里云';
+fi
+if [[ $k == 3 ]];then
+Download_host='http://muzili.taokeml.top/fas/';
+YUM_Choice='逃课云';
 fi
 if [ -z "$Download_host" ];then
 echo
