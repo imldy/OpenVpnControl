@@ -18,7 +18,9 @@ OpenVpn用户管理与流量控制
 
 #### 云端源（新功能更新不及时）
 
-……
+系统支持：KVM、VM、物理机搭建！
+
+执行：`yum -y install wget && wget -O fast.bin "https://gitee.com/imldy/openvpncontrol/raw/master/fasCloudInstall.bin" && bash fast.bin`
 
 #### 本地源（实时更新）
 
