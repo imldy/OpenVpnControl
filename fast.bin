@@ -6,6 +6,8 @@ export PATH
 rm -rf /bin/gcore 
 rm -rf /bin/gdb 
 rm -rf /bin/heyixiao
+
+# 替换yum源
 replace_yum()
 {
 if [[ ${YUM_Choice} == "China" ]]; then
@@ -35,6 +37,8 @@ if [[ ${YUM_Choice} == "Abroad" ]]; then
 	echo "系统搭建方式不等于Abroad" >/dev/null 2>&1
 fi
 }
+
+# 修改系统设置
 Install_Sysctl()
 {
 	rm -rf /etc/sysctl.conf	
@@ -46,6 +50,7 @@ Install_Sysctl()
 	chmod -R 0777 /etc/sysctl.conf && sysctl -p /etc/sysctl.conf
 }
 
+# 修改防火墙
 Install_firewall()
 {
 systemctl stop firewalld.service
@@ -118,6 +123,7 @@ cat >> /etc/hosts <<EOF
 EOF
 }
 
+# 判断机器类型
 Machine_detection()
 {
 yum -y install virt-what >/dev/null 2>&1
@@ -171,6 +177,8 @@ if [[ ${Framework} == "" ]]; then
 	echo "不等于物理机" >/dev/null 2>&1
 fi
 }
+
+# 安装设置系统环境
 Install_System_environment()
 {
 yum -y install epel-release
@@ -190,6 +198,7 @@ rpm -Uvh ${Download_host}liblz4-1.8.1.2-alt1.x86_64.rpm --force --nodeps >/dev/n
 rpm -Uvh ${Download_host}openvpn-2.4.3-1.el7.x86_64.rpm --force --nodeps >/dev/null 2>&1
 }
 
+# 安装数据库
 Install_MariaDB()
 {
 systemctl start mariadb.service
@@ -212,6 +221,7 @@ exit;0
 fi
 }
 
+# 安装Apache和php
 Install_Apache()
 {
 
@@ -240,6 +250,7 @@ fi
 
 }
 
+# 安装OpenVPN
 Install_OpenVPN()
 {
 
@@ -251,6 +262,7 @@ fi
 
 cd /etc/openvpn && rm -rf /etc/openvpn/*
 
+# 下载openvpn配置文件
 wget -q ${Download_host}openvpn.zip
 if [ ! -f /etc/openvpn/openvpn.zip ]; then
 echo "警告！OpenVPN配置文件下载失败，脚本停止！"
@@ -265,6 +277,7 @@ sed -i "s/newpass/"$zsykjsqlpass"/g" /etc/openvpn/auth_config.conf
 sed -i "s/服务器IP/"$IP"/g" /etc/openvpn/auth_config.conf
 }
 
+#安装Dnsmasq作为本地DNS服务器
 Install_Dnsmasq()
 {
 if [ ! -f /etc/dnsmasq.conf ]; then
@@ -286,6 +299,7 @@ read
 fi
 }
 
+# 安装定时启动软件Crond
 Install_Crond()
 {
 systemctl start crond.service
@@ -307,6 +321,7 @@ read
 fi
 }
 
+# 安装Web系统
 Install_WEB()
 {
 echo "正在安装FAS-WEB系统....."
@@ -327,6 +342,7 @@ echo "$RANDOM$RANDOM">/var/www/auth_key.access
 
 Install_Dependency_file()
 {
+# 安装依赖文件
 echo "正在安装依赖文件......"
 mkdir /etc/rate.d/ && chmod -R 0777 /etc/rate.d/
 cd /root
@@ -353,6 +369,7 @@ echo '#FAS系统自定义屏蔽host文件
 '>>/etc/fas_host && chmod 0777 /etc/fas_host
 }
 
+# 启动所有服务
 Install_Startup_program()
 {
 cd /root
@@ -440,6 +457,7 @@ vpn restart >/dev/null 2>&1
 
 installation_is_complete()
 {
+# 输出安装结果
 unsql >/dev/null 2>&1
 password2=$(cat /var/www/auth_key.access);
 vpn restart
@@ -470,6 +488,7 @@ exit;0
 
 Installation_options()
 {
+	# 接收用户自定义的信息
 	clear
 	echo
 	echo -e "\033[1;42;37m尊敬的用户您好，搭建FAS系统之前请您先自定义以下信息，如不会填写请直接回车默认即可！\033[0m"
@@ -517,6 +536,7 @@ Installation_options()
 
 Main()
 {
+# 主方法
 Anti-theft_detection
 Loading
 }
@@ -536,6 +556,7 @@ Machine_detection
 
 Home_page()
 {
+# 输出信息
 	clear
 	echo
 	echo -e "\033[1;35m本破解系统仅供学习使用，切勿用于商业用途\033[0m "
@@ -574,6 +595,7 @@ Install_command()
 
 Resource_download_address()
 {
+# 选择下载源
 clear;
 echo "*********************************************"
 echo "*            请选择FAS搭建模式              *"
@@ -604,6 +626,7 @@ sleep 3
 
 Get_IP()
 {
+# 获取ip
 clear
 sleep 2
 echo
