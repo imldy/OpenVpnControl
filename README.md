@@ -4,13 +4,17 @@
 
 由“Fas流控”修改而来，还有一部分文件来自于“聚力流控”，皆搜集自网络。侵删。
 
-## 项目作用
+## 项目作用与项目定位
 
-OpenVpn用户管理与流量控制
+OpenVpn用户管理与流量控制。
+
+暂未配套专用APP，适用于个人配合OpenVPN for Android或OpenVPN Connect等通用软件进行使用。
 
 ## 项目宗旨
 
 搭建快速方便、使用优雅简洁。
+
+代码人人可见，后门无所遁形。
 
 ## 如何使用
 
@@ -47,6 +51,10 @@ OpenVpn用户管理与流量控制
 修改`fasCloudInstall.bin`的`Download_host`值为你云端位置，例如`https://cc.bb.aa/dependence/`
 
 执行`bash fasCloudInstall.bin`
+
+## 后门说明
+
+项目初始文件皆来自于网络，能开源的都开源了，有无后门自行判断，我只能说明我目前没有发现，欢迎大佬参与项目寻找BUG和后门。
 
 ## 免责声明
 
