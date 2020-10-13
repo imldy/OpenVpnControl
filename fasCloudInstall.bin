@@ -321,22 +321,31 @@ read
 fi
 }
 
-# 安装Web系统
+# 安装Web系统，数据库初始化
 Install_WEB()
 {
 echo "正在安装FAS-WEB系统....."
+# 删除可能存在的web页面
 rm -rf /var/www/html
 cd /var/www
+# 下载web页面压缩包
 wget -q ${Download_host}fas_web.zip
+# 解压到当前目录
 unzip -o fas_web.zip >/dev/null 2>&1
 rm -rf fas_web.zip
 chmod 0777 -R /var/www/html
+# 用新设置的数据库账号、密码替换原本数据库备份文件中的账号密码
 sed -i "s/julifasadmin/"$zsykjadminuser"/g" /var/www/vpndata.sql
 sed -i "s/julifaspass/"$zsykjadminpass"/g" /var/www/vpndata.sql
+# 用本服务器ip替换到数据库备份文件
 sed -i "s/服务器IP/"$IP"/g" /var/www/vpndata.sql
+# 将据库备份文件恢复到数据库
 mysql -uroot -p$zsykjsqlpass vpndata < /var/www/vpndata.sql
+# 删除下载的数据库备份文件
 rm -rf /var/www/vpndata.sql
+# 设置web页面密码
 sed -i "s/newpass/"$zsykjsqlpass"/g" /var/www/html/config.php
+# 设置随机的web本地密钥
 echo "$RANDOM$RANDOM">/var/www/auth_key.access
 }
 
