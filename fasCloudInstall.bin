@@ -41,6 +41,8 @@ fi
 # 修改系统设置
 Install_Sysctl()
 {
+	# sysctl.conf：允许改变正在运行中的Linux系统
+	# 更改内核参数
 	rm -rf /etc/sysctl.conf	
 	wget -q ${Download_host}sysctl.conf -P /etc
 	if [ ! -f /etc/sysctl.conf ]; then
@@ -123,7 +125,7 @@ cat >> /etc/hosts <<EOF
 EOF
 }
 
-# 判断机器类型
+# 判断机器架构类型
 Machine_detection()
 {
 yum -y install virt-what >/dev/null 2>&1
@@ -550,16 +552,19 @@ Anti-theft_detection
 Loading
 }
 
+# 加载：检查环境以及初始化
 Loading()
 {
 rm -rf $0 >/dev/null 2>&1
 clear 
 echo
 echo "正在检查安装环境(预计三分钟内完成)...."
+# 检测登录系统的账户和版本
 system_detection
 
 #安装wget curl等等  修复vr服务器没selinux问题
 yum -y install curl wget docker openssl net-tools procps-ng >/dev/null 2>&1
+# 判断机器架构类型
 Machine_detection
 }
 
@@ -699,6 +704,7 @@ echo -e "\033[31m输入错误！请重新运行脚本！\033[0m "
 exit;0
 }
 
+# 系统检测：检测账户以及系统版本
 system_detection()
 {
 if [[ "$EUID" -ne 0 ]]; then  
@@ -751,5 +757,6 @@ Close_Selinux()
 	fi
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config	
 }
+# 执行主方法
 Main
 exit;0
