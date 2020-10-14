@@ -18,11 +18,15 @@ OpenVpn用户管理与流量控制。
 
 ## 如何使用
 
+系统支持：CentOS 7.0 - 7.4
+
+系统架构：KVM、Hyper-V、VMware、物理机
+
 ### 直接使用成品搭建
 
 #### 云端源（新功能更新不及时）
 
-系统支持：KVM、VM、物理机搭建！
+
 
 执行：`yum -y install wget && wget "https://gitee.com/imldy/openvpncontrol/raw/master/fasCloudInstall.bin" && bash fasCloudInstall.bin`
 
