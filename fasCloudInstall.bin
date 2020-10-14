@@ -128,8 +128,11 @@ EOF
 # 判断机器架构类型
 Machine_detection()
 {
+# 安装用于判断系统架构的程序
 yum -y install virt-what >/dev/null 2>&1
+# 获取系统架构
 Framework=$( virt-what )
+# 判断系统架构
 if [ ${Framework} == "ovz"  -o ${Framework} == "openvz" ]; then
 	echo
 	echo "您当前机器架构为 OpenVZ 虚拟平台，暂不支持此架构机器安装此流控，可更换KVM、Hyper-V、VMware架构或物理机器后再次进行搭建操作！"
