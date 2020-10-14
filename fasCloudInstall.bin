@@ -130,53 +130,21 @@ Machine_detection()
 {
 yum -y install virt-what >/dev/null 2>&1
 Framework=$( virt-what )
-if [[ ${Framework} == "ovz" ]]; then
+if [ ${Framework} == "ovz"  -o ${Framework} == "openvz" ]; then
 	echo
-	echo "您当前机器架构为 OpenVZ 虚拟平台，暂不支持此架构机器安装Dalo系统，请更换KVM或Hyper-V架构或物理机器后再次进行搭建操作！"
+	echo "您当前机器架构为 OpenVZ 虚拟平台，暂不支持此架构机器安装此流控，可更换KVM、Hyper-V、VMware架构或物理机器后再次进行搭建操作！"
 	sleep 5
 	exit;0
 	else
-	echo "不等于ovz" >/dev/null 2>&1
+	echo "不等于${Framework}" >/dev/null 2>&1
 fi
-if [[ ${Framework} == "openvz" ]]; then
+if [ ${Framework} == "kvm"  -o  ${Framework} == "hyperv"  -o  ${Framework} == "vmware"  -o  ${Framework} == "" ]; then
 	echo
-	echo "您当前机器架构为 OpenVZ 虚拟平台，暂不支持此架构机器安装Dalo系统，请更换KVM或Hyper-V架构或物理机器后再次进行搭建操作！"
-	sleep 5
-	exit;0
-	else
-	echo "不等于openvz" >/dev/null 2>&1
-fi
-if [[ ${Framework} == "kvm" ]]; then
-	echo
-	echo "您当前机器架构为 KVM 虚拟平台，符合系统安装环境！"
+	echo "您当前机器架构为 ${Framework} 虚拟平台，符合系统安装环境！"
 	sleep 5
 	Home_page
 	else
-	echo "kvm" >/dev/null 2>&1
-fi
-if [[ ${Framework} == "hyperv" ]]; then
-	echo
-	echo "您当前机器架构为 Hyper-V 虚拟平台，符合系统安装环境！"
-	sleep 5
-	Home_page
-	else
-	echo "不等于hyperv" >/dev/null 2>&1
-fi
-if [[ ${Framework} == "vmware" ]]; then
-	echo
-	echo "您当前机器架构为 VMware 虚拟平台，符合系统安装环境！"
-	sleep 5
-	Home_page
-	else
-	echo "不等于VMware" >/dev/null 2>&1
-fi
-if [[ ${Framework} == "" ]]; then
-	echo
-	echo "您当前机器架构为 物理机器/实体机器，符合系统安装环境！"
-	sleep 5
-	Home_page
-	else
-	echo "不等于物理机" >/dev/null 2>&1
+	echo ${Framework} >/dev/null 2>&1
 fi
 }
 
