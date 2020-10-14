@@ -26,8 +26,6 @@ OpenVpn用户管理与流量控制。
 
 #### 云端源（新功能更新不及时）
 
-
-
 执行：`yum -y install wget && wget "https://gitee.com/imldy/openvpncontrol/raw/master/fasCloudInstall.bin" && bash fasCloudInstall.bin`
 
 #### 本地源（实时更新）
