@@ -1,5 +1,5 @@
 #!/bin/bash
 rm -rf /var/www/SQL.lock
-echo "FAS系统数据库后台防黑验证文件，请勿删除或修改！何以潇QQ：1744744000">>/var/www/SQL.lock
+echo "FAS系统数据库后台防黑验证文件，请勿删除或修改！">>/var/www/SQL.lock
 echo -e "\033[34mFAS数据库后台管理登录关闭成功！\033[0m"
 exit;

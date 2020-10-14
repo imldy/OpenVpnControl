@@ -1,6 +1,4 @@
 #!/bin/bash
-#此功能由何以潇编写
-#QQ：1744744000
 echo
 echo "加载中..."
 sleep 3

@@ -1,5 +1,4 @@
 #!/bin/bash
-#何以潇QQ：1744744000
 action=$1
 
 function start_fas_service(){

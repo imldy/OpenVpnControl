@@ -1,5 +1,4 @@
 #!/bin/bash
-#何以潇QQ：1744744000
 clear
 echo -e "请选择协议类型（本程序仅适用于FAS系统）："
 echo -e "1. TCP 代理端口"

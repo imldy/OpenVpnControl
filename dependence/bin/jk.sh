@@ -1,5 +1,4 @@
 #!/bin/bash
-#何以潇QQ：1744744000
 source /etc/openvpn/auth_config.conf
 while true
 do
