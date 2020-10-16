@@ -154,14 +154,49 @@ fi
 # 安装设置系统环境
 Install_System_environment()
 {
+# EPEL是由 Fedora 社区打造，为 RHEL 及衍生发行版如 CentOS、Scientific Linux 等提供高质量软件包的项目。装上了 EPEL之后，就相当于添加了一个第三方源。
 yum -y install epel-release
 
+# telnet：命令通常用来远程登录
+# avahi：Avahi允许程序在不需要进行手动网络配置的情况下，在一个本地网络中发布和获知各种服务和主机。
+# OpenSSL：是一个开放源代码的软件库包，应用程序可以使用这个包来进行安全通信，避免窃听，同时确认另一端连线者的身份
+# LZO：是致力于解压速度的一种数据压缩算法
+# pam：是一个系统级用户认证框架
+# GNU Automake是一种编程工具，可以产生供make程式使用的Makefile，用来编译程序。
+# pkg-config 是一个在源代码编译时查询已安装的库的使用接口的计算机工具软件。
+# gawk：GAWK的主要功能就是处理文本文件的数据，自动将变量分配给每行的每个数据元素实现这一功能。
+# tar zip unzip：解压缩
+# net-tools：配置网络功能
+# Psmisc软件包包含三个帮助管理/proc目录的程序。
+# 	fuser 显示使用指定文件或者文件系统的进程的PID。
+# 	killall 杀死某个名字的进程，它向运行指定命令的所有进程发出信号。
+# 	pstree 树型显示当前运行的进程。
+# gcc：GNU编译器套装
+# pkcs11：PKCS＃11标准定义了与密码令牌的独立于平台的API，并将API本身命名为“Cryptoki”
+# libxml2：libxml是一个用来解析XML文档的函数库
+# bzip2：是Julian Seward开发并按照自由软件／开源软件协议发布的数据压缩算法及程序。
+# libcurl：基于网络协议，对指定URL进行网络传输。
+# libjpeg：libjpeg是一个完全用C语言编写的处理JPEG图像数据格式的自由库。
+# libpng：libpng是官方的便携式网络图形参考库。它是一个独立于平台的库，其中包含用于处理PNG图像的C函数。它支持几乎所有PNG的功能，
+# freetype：是一个用C语言实现的一个字体光栅化库。
+# gmp：是一个开源的任意精度运算库，支持正负数的整数、有理数、浮点数。它没有任何精度限制，只受限于可用内存。
+# libmcrypt：可以实现加密解密功能
+# readline：可为具有命令行界面的交互式程序提供行编辑器和历史记录功能
+# libxslt：用于XML解析，树操作和XPath支持
 yum -y install telnet avahi openssl openssl-libs openssl-devel lzo lzo-devel pam pam-devel automake pkgconfig gawk tar zip unzip net-tools psmisc gcc pkcs11-helper libxml2 libxml2-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel
 
+# mariadb：是MySQL关系数据库管理系统的一个复刻，由社区开发，有商业支持，旨在继续保持在GNU GPL下开源。
+# httpd：为Apache HTTP服务器程序。
+# dnsmasq：是一个开源的轻量级DNS转发和DHCP、TFTP服务器。针对家庭局域网等小型局域网设计，资源占用低，易于配置。
+# jre：Java程序运行环境
+# crontabs：用来定期执行程序
 yum -y install mariadb mariadb-server httpd dnsmasq jre-1.7.0-openjdk crontabs 
 
+# webtatic：是一个致力于将实现 web 服务的各类软件。
+# 安装epel和webtatic都是为了方便安装php及其扩展
 rpm -Uvh ${Download_host}webtatic-release.rpm --force --nodeps >/dev/null 2>&1
 
+# 安装php7.0以及一系列拓展
 yum install php70w-fpm -y
 
 yum install php70w php70w-bcmath php70w-cli php70w-common php70w-dba php70w-devel php70w-embedded php70w-enchant php70w-gd php70w-imap php70w-ldap php70w-mbstring php70w-mcrypt php70w-mysqlnd php70w-odbc php70w-opcache php70w-pdo php70w-pdo_dblib php70w-pear.noarch php70w-pecl-apcu php70w-pecl-apcu-devel php70w-pecl-imagick php70w-pecl-imagick-devel php70w-pecl-mongodb php70w-pecl-redis php70w-pecl-xdebug php70w-pgsql php70w-xml php70w-xmlrpc php70w-intl php70w-mcrypt --nogpgcheck php-fedora-autoloader php-php-gettext php-tcpdf php-tcpdf-dejavu-sans-fonts php70w-tidy -y --skip-broken
@@ -171,7 +206,7 @@ rpm -Uvh ${Download_host}liblz4-1.8.1.2-alt1.x86_64.rpm --force --nodeps >/dev/n
 rpm -Uvh ${Download_host}openvpn-2.4.3-1.el7.x86_64.rpm --force --nodeps >/dev/null 2>&1
 }
 
-# 安装数据库
+# 启动数据库
 Install_MariaDB()
 {
 systemctl start mariadb.service
@@ -194,7 +229,7 @@ exit;0
 fi
 }
 
-# 安装Apache和php
+# 启动Apache httpd和php
 Install_Apache()
 {
 
@@ -272,7 +307,7 @@ read
 fi
 }
 
-# 安装定时启动软件Crond
+# 启动定时启动软件Crond
 Install_Crond()
 {
 systemctl start crond.service
