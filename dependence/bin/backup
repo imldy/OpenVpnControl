@@ -16,7 +16,7 @@ rm -rf /root/用户备份${mysql_data}.sql >/dev/null 2>&1
 mysqldump -h${mysql_host} -P${mysql_port} -u${mysql_user} -p${mysql_pass} ${mysql_data} > /root/用户备份${mysql_data}.sql
 if [ ! -f /root/用户备份${mysql_data}.sql ]; then
 echo
-echo "备份失败，请联系何以潇QQ：943756780 处理！"
+echo "备份失败，原因未知。"
 else
 echo
 echo "数据库"${mysql_data}"已成功备份在/root/用户备份"${mysql_data}".sql"
