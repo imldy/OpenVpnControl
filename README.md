@@ -66,6 +66,8 @@ OpenVpn用户管理与流量控制。
 
 感谢：Fas流控开发者
 
+感谢：聚力网络科技
+
 感谢：heyixiao
 
 感谢：ZSCloud - 知速云
