@@ -193,7 +193,8 @@ yum -y install telnet avahi openssl openssl-libs openssl-devel lzo lzo-devel pam
 yum -y install mariadb mariadb-server httpd dnsmasq jre-1.7.0-openjdk crontabs 
 
 # webtatic：是一个致力于将实现 web 服务的各类软件。
-# 安装epel和webtatic都是为了方便安装php及其扩展
+# 安装epel和webtatic都是为了方便安装php及其扩展，但是epel和webtatic安装php的速度很慢，需要解决办法
+# todo:解决epel和webtatic安装php的速度很慢的问题。2020年10月16日
 rpm -Uvh ${Download_host}webtatic-release.rpm --force --nodeps >/dev/null 2>&1
 
 # 安装php7.0以及一系列拓展
