@@ -86,15 +86,23 @@ OpenVpn用户管理与流量控制。
 
 可以配置一个能访问外网的代理服务器。
 
-修改/etc/yum.conf文件，尾部追加如下内容：
+修改/etc/profile文件
+
+执行：`vi /etc/profile`
+
+尾部追加如下内容：
 
 ```
 #配置代理
 http_proxy=http://你的代理IP地址:端口
-https_proxy=http://你的代理IP地址:端口
+https_proxy=https://你的代理IP地址:端口
 #不代理的ip/域名/主机列表
 no_proxy="127.0.0.1,localhost,mirrors.tencentyun.com"
+export http_proxy https_proxy no_proxy
 #若代理需要账号密码，则添加；（否则请省略以下；）
 proxy_username=你的代理的用户名
 proxy_password=你的代理的密码
+export proxy_username proxy_password
 ```
+
+然后执行：`source /etc/profil` 即可生效。
