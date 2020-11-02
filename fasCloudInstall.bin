@@ -785,18 +785,4 @@ Loading
 }
 # 执行主方法
 Main
-exit;0curl等等  修复vr服务器没selinux问题
-yum -y install curl wget docker openssl net-tools procps-ng >/dev/null 2>&1
-# 判断机器架构类型
-Machine_detection
-}
-
-Main()
-{
-# 主方法
-Anti-theft_detection
-Loading
-}
-# 执行主方法
-Main
-exit;00
+exit;0
