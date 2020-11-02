@@ -1,5 +1,4 @@
 <script>
-//本FAS系统由何以潇破解QQ1744744000  
   $(function() {
     $( ".Wdate" ).datepicker({
     defaultDate: "+1w",
@@ -50,11 +49,9 @@
 		});
 		$('.line-id-'+id).slideUp();
   }
-  
- //本FAS系统由何以潇破解QQ1744744000 
   </script>
 		<center><br><br>
-		版权所有：聚力网络科技（<a href="http://www.juliwangluo.cn/" target="_blank">www.juliwangluo.cn</a>） 谨防盗版 违者必究&nbsp;&nbsp;&nbsp;Crack by <a href="http://wpa.qq.com/msgrd?v=3&uin=1744744000&site=qq&menu=yes" target="_blank">何以潇.</a>
+		Power by <a href="https://github.com/imldy/OpenVpnControl" target="_blank">OpenVpnControl</a>
 		<br>
 		</center>
 

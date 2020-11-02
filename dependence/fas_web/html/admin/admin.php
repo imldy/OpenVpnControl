@@ -25,7 +25,7 @@ function unsetLine($arr){
 	}
 	return $line;
 }
-//本FAS系统由何以潇破解QQ1744744000   盗版凌一继续
+
 $nums = db(_openvpn_)->getnums();
 $user_num = db(_openvpn_)->where(["i"=>"1"])->getnums();
 $nums2 = db(_openvpn_)->where(["online"=>"1"])->getnums();
@@ -212,7 +212,6 @@ $key = file_get_contents("license.key");
 			//echo '<div style="border-bottom:1px dashed #ccc;margin-bottom:10px;"><span class="label label-info">监控运行中</span>&nbsp;<b>'.$v."</b></div>";
 			 $run = true;
 		 }
-		 //本FAS系统由何以潇破解QQ1744744000   盗版凌一继续
 		 if($run){
 			 echo '<div class="btn btn-primary btn-block">';
 			 echo "[用户流量监控] 运行正常";
