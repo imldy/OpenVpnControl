@@ -20,15 +20,8 @@
 	}elseif($_GET['act'] == 'add'){
 		$db = db('line');
 		if($_POST["kuai"] == 1){
-			$line[] = '# UP-date Wed Jun CST 2018 07 10  by hyx';
 			$line[] = '# Enables connection to GUI';
-			$line[] = '# 本.ovpn配置仅适用于FAS流控系统，修改代理IP即可登陆到您的服务器。';
-			$line[] = '# 其他流控注意更换证书秘钥。';
-			$line[] = '# FAS免流线路，请测试好免流效果后使用。';
-			$line[] = '# 本文件由FAS系统自动生成';
-			$line[] = '# FAS系统破解作者QQ：943756780';
-			$line[] = '# 大佬装逼交流群：541349340  欢迎你的加入！';
-			$line[] = '# 聚力网络科技官网：www.juliwangluo.cn';
+			$line[] = '# 开源OpenVpnControl流控，项目仓库：https://github.com/imldy/OpenVpnControl';
 			$line[] = '# quote-configuration';
 			$line[] = 'setenv IV_GUI_VER "de.blinkt.openvpn 0.6.17"';
 			$line[] = 'machine-readable-output';
@@ -45,8 +38,6 @@
 			$line[] = 'dev tun';
 			$line[] = '';
 			$line[] = $_POST['k_content'];
-			$line[] = '';
-			$line[] = '#如需购买服务器联系QQ：943756780  限时低价镇江1H 1G 20M 20G 无限流量机器90元 并代搭建 FAS系统、DALO系统（任选一款系统）';
 			$line[] = '';
 			$line[] = '# Setting Upinstall "Domain Name System"';
 			$line[] = '';
