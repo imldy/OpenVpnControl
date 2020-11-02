@@ -1,5 +1,5 @@
 <?php
-$cfg['site']['name'] = '筑梦聚力';
+$cfg['site']['name'] = 'OpenVpnControl';
 $cfg['site']['host'] = '127.0.0.1';
 $cfg['site']['keyword'] = '职业社交,技术交流平台,PHP,程序员之家,IT之家';
 $cfg['site']['content'] = '职业社交与技术交流平台';

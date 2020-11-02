@@ -20,7 +20,7 @@
 <div class="col-md-8 col-md-offset-2">
 <h3> <i  class="fa fa-lightbulb-o fa-5x"></i> </h3>
 <a href="../user/" class="btn btn-primary">返回个人中心</a><br/><br/>
-<br/>Copyright © 2016-2018 <a href="http://www.juliwangluo.cn/" target="_blank" title="www.juliwangluo.cn">聚力网络科技</a> All rights reserved.</a></div></div></div>
+<br/>Power by <a href="https://github.com/imldy/OpenVpnControl" target="_blank">OpenVpnControl</a></div></div></div>
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/countUp.js"></script>

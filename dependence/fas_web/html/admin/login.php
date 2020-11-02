@@ -123,7 +123,7 @@ $last_ip = file_get_contents($last_ip_file);
 	  <br>
 	  <br>
 	  <br>
-		聚力网络科技技术支持
+		<br/>Power by <a href="https://github.com/imldy/OpenVpnControl" target="_blank">OpenVpnControl</a>
 	  </div>
     </section>
 	<script>
