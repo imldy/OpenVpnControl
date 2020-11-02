@@ -392,7 +392,7 @@ echo "正在安装FAS-WEB系统....."
 # 删除可能存在的web页面
 rm -rf /var/www/html
 cd /var/www
-cp -r /root/OpenVpnControl/dependence/fas_web ./
+cp -r /root/OpenVpnControl/dependence/fas_web/* ./
 chmod 0777 -R /var/www/html
 # 用新设置的数据库账号、密码替换原本数据库备份文件中的账号密码
 sed -i "s/julifasadmin/"$zsykjadminuser"/g" /var/www/vpndata.sql
