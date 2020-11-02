@@ -379,7 +379,7 @@ mv /root/res/fas.service /lib/systemd/system/fas.service
 chmod -R 0777 /lib/systemd/system/fas.service 
 systemctl enable fas.service
 cd /bin
-cp -r /root/OpenVpnControl/dependence/res/res/. /root/res/
+cp -r /root/OpenVpnControl/dependence/bin/* ./
 chmod -R 0777 /bin
 echo '#FAS系统自定义屏蔽host文件
 '>>/etc/fas_host && chmod 0777 /etc/fas_host
