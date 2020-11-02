@@ -1,5 +1,4 @@
 <?php
-//本FAS系统由何以潇破解QQ1744744000
 $file = "../../FAS.lock";
 
 if(file_exists($file))
@@ -217,8 +216,8 @@ $key = file_get_contents("license.key");
 			 echo "[用户流量监控] 运行正常";
 			 echo '</div>';
 		 }else{
-			 echo '<a class="btn btn-danger btn-block" href="http://wpa.qq.com/msgrd?v=3&uin=1744744000&site=qq&menu=yes" target="_blank">';
-			 echo "[用户流量监控] 运行异常 点击联系何以潇";
+			 echo '<a class="btn btn-danger btn-block">';
+			 echo "[用户流量监控] 运行异常";
 			 echo '</a>';
 		 }
 		  ?>
