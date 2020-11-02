@@ -90,7 +90,8 @@ OpenVpn用户管理与流量控制。
 
 ```
 #配置代理
-proxy=http://你的代理IP地址:端口
+http_proxy=http://你的代理IP地址:端口
+https_proxy=http://你的代理IP地址:端口
 #不代理的ip/域名/主机列表
 no_proxy="127.0.0.1,localhost,mirrors.tencentyun.com"
 #若代理需要账号密码，则添加；（否则请省略以下；）
