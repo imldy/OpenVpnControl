@@ -239,7 +239,7 @@ CREATE TABLE `app_gg` (
 
 LOCK TABLES `app_gg` WRITE;
 /*!40000 ALTER TABLE `app_gg` DISABLE KEYS */;
-INSERT INTO `app_gg` VALUES (1,0,'欢迎使用猪梦FAS流控','猪梦FAS流控由何以潇破解，欢迎您的使用，此公告管理员请自行更改或删除！','1528041043');
+INSERT INTO `app_gg` VALUES (1,0,'欢迎使用OpenVpnControl流控','OpenVpnControl流控是一个开源流控，项目仓库：https://github.com/imldy/openvpncontrol。欢迎您的使用，此公告管理员请自行更改或删除！','1528041043');
 /*!40000 ALTER TABLE `app_gg` ENABLE KEYS */;
 UNLOCK TABLES;
 

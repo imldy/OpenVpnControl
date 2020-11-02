@@ -5,10 +5,6 @@
 	$last_time = $_SESSION["last_send"] == "" ? 0 : $_SESSION["last_send"];
 	$al_time = $system_time - $last_time;
 ?>
-<!-- //本FAS系统由何以潇破解QQ1744744000   盗版凌一继续
-     官网：www.juliwangluo.cn
-	 FAS系统由何以潇破解！
-	 大佬装逼交流群：541349340 -->
 <html>
 <head>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -129,7 +125,3 @@ $(function() {
         }) 
     }); 
 </script>
-<!-- //本FAS系统由何以潇破解QQ1744744000   盗版凌一继续
-     官网：www.juliwangluo.cn
-	 FAS系统由何以潇破解！
-	 大佬装逼交流群：541349340 -->

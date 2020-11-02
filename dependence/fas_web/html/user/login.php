@@ -1,5 +1,4 @@
 ﻿<?php
-//本FAS系统由何以潇破解QQ1744744000   盗版凌一继续
 $not_to_login = true;
 require("system.php");
 if(ACT == "logout"){

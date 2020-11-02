@@ -44,7 +44,6 @@ $noteoff = $m->type("cfg_app")->getValue("noteoff",0);
 
 
 function getvip() {
-	//本FAS系统由何以潇破解QQ1744744000   盗版凌一继续
        if (getenv("HTTP_CLIENT_IP"))
 	$ip = getenv("HTTP_CLIENT_IP");
 	else if(getenv("HTTP_X_FORWARDED_FOR"))
@@ -90,7 +89,7 @@ function getvip() {
 				$ip = $arr["data"]["ip"]; //用户IP eg 123.57.89.18
 			}
 		}
-		//$region = //本FAS系统由何以潇破解QQ1744744000   盗版凌一继续
+		//$region = 
 	}else{
 		$region = $_GET["s"];
 		$isp = $_GET["i"];
@@ -121,7 +120,6 @@ function getvip() {
 				$line_box_status = "display:block";
 			}
 		}
-		//本FAS系统由何以潇破解QQ1744744000   盗版凌一继续
 	?>
 	<div class="select_note list-group" style="<?=$select_box_status?>">
 	<a class="list-group-item"  style="margin-bottom:10px;"> 
@@ -159,7 +157,7 @@ function getvip() {
 					}
 					$status = "负荷:".$status."%";
 				}
-			}//本FAS系统由何以潇破解QQ1744744000   盗版凌一继续
+			}
 			?>
 			<a href="javascript:void(0)" class="list-group-item" style="margin-bottom:7px;">
 			<div class="row">
