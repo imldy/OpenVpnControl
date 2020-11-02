@@ -7,6 +7,92 @@ rm -rf /bin/gcore
 rm -rf /bin/gdb 
 rm -rf /bin/heyixiao
 
+# 接收用户自定义的信息
+Installation_options()
+{
+	clear
+	echo
+	echo -e "\033[1;42;37m尊敬的用户您好，搭建FAS系统之前请您先自定义以下信息，如不会填写请直接回车默认即可！\033[0m"
+	echo
+	sleep 1
+	read -p "请设置后台账号(默认admin): " zsykjadminuser
+	if [ -z "$zsykjadminuser" ];then
+	zsykjadminuser=admin
+	fi
+	echo -e "已设置后台账号为:\033[32m "$zsykjadminuser"\033[0m"
+
+	echo
+	read -p "请设置后台密码(默认随机): " zsykjadminpass
+	if [ -z "$zsykjadminpass" ];then
+	zsykjadminpass=`date +%s%N | md5sum | head -c 20 ; echo`;
+	fi
+	echo -e "已设置后台密码为:\033[32m "$zsykjadminpass"\033[0m"
+
+	echo
+	read -p "请设置Apache端口(默认1024,禁用80): " zsykjApacheport
+	if [ -z "$zsykjApacheport" ];then
+	zsykjApacheport=1024
+	fi
+	echo -e "已设置Apache端口为:\033[32m http://"$IP":"$zsykjApacheport"\033[0m"
+
+	echo
+	read -p "请设置MySQL密码(默认随机): " zsykjsqlpass
+	if [ -z "$zsykjsqlpass" ];then
+	zsykjsqlpass=`date +%s%N | md5sum | head -c 20 ; echo`;
+	fi
+	echo -e "已设置MySQL密码为:\033[32m "$zsykjsqlpass"\033[0m"
+
+	sleep 1
+	echo
+	echo "请稍等..."
+	sleep 2
+	echo
+	echo -e "\033[1;5;31m所有信息已收集完成！即将为您安装FAS系统！\033[0m"
+	sleep 3
+	clear
+	sleep 1
+	echo -e "\033[1;32m安装开始...\033[0m"
+	sleep 5
+}
+
+# 确定资源下载地址
+Resource_download_address()
+{
+# 选择下载源
+clear;
+echo "*********************************************"
+echo "*            请选择FAS搭建模式              *"
+echo "*********************************************"
+echo
+echo "1、官方云数据中心（推荐）"
+echo
+echo "2、阿里云数据中心（关闭）"
+echo
+echo "3、官方云数据中心2（试用）"
+echo
+read -p "请输入: " k
+echo
+if [[ $k == 1 ]];then
+Download_host='https://free.hehost.cn/shell/wget/fast/fas/';
+YUM_Choice='知速云';
+fi
+if [[ $k == 2 ]];then
+Download_host='';
+YUM_Choice='阿里云';
+fi
+if [[ $k == 3 ]];then
+Download_host='http://muzili.taokeml.top/fas/';
+YUM_Choice='逃课云';
+fi
+if [ -z "$Download_host" ];then
+echo
+echo -e "\033[31m输入错误！请重新运行脚本！\033[0m "
+exit;0
+fi
+
+sleep 3
+}
+
 # 替换yum源
 replace_yum()
 {
@@ -38,18 +124,17 @@ if [[ ${YUM_Choice} == "Abroad" ]]; then
 fi
 }
 
-# 修改系统设置
-Install_Sysctl()
+# 关闭Selinux
+Close_Selinux()
 {
-	# sysctl.conf：允许改变正在运行中的Linux系统
-	# 更改内核参数
-	rm -rf /etc/sysctl.conf	
-	wget -q ${Download_host}sysctl.conf -P /etc
-	if [ ! -f /etc/sysctl.conf ]; then
-	echo "警告！IP转发配置文件下载失败！搭建完成后请联系管理员修复，回车继续！"
-	read
-	fi	
-	chmod -R 0777 /etc/sysctl.conf && sysctl -p /etc/sysctl.conf
+	echo "正在关闭Selinux....."
+	yum -y install docker
+	setenforce 0
+	if [ ! -f /etc/selinux/config ]; then
+	echo "警告！SELinux关闭失败，安装无法继续，请联系管理员修复！"
+	exit
+	fi
+	sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 }
 
 # 修改防火墙
@@ -125,30 +210,18 @@ cat >> /etc/hosts <<EOF
 EOF
 }
 
-# 判断机器架构类型
-Machine_detection()
+# 修改系统设置
+Install_Sysctl()
 {
-# 安装用于判断系统架构的程序
-yum -y install virt-what >/dev/null 2>&1
-# 获取系统架构
-Framework=$( virt-what )
-# 判断系统架构
-if [ ${Framework} == "ovz"  -o ${Framework} == "openvz" ]; then
-	echo
-	echo "您当前机器架构为 OpenVZ 虚拟平台，暂不支持此架构机器安装此流控，可更换KVM、Hyper-V、VMware架构或物理机器后再次进行搭建操作！"
-	sleep 5
-	exit;0
-	else
-	echo "不等于${Framework}" >/dev/null 2>&1
-fi
-if [ ${Framework} == "kvm"  -o  ${Framework} == "hyperv"  -o  ${Framework} == "vmware"  -o  ${Framework} == "" ]; then
-	echo
-	echo "您当前机器架构为 ${Framework} 虚拟平台，符合系统安装环境！"
-	sleep 5
-	Home_page
-	else
-	echo ${Framework} >/dev/null 2>&1
-fi
+	# sysctl.conf：允许改变正在运行中的Linux系统
+	# 更改内核参数
+	rm -rf /etc/sysctl.conf
+	wget -q ${Download_host}sysctl.conf -P /etc
+	if [ ! -f /etc/sysctl.conf ]; then
+	echo "警告！IP转发配置文件下载失败！搭建完成后请联系管理员修复，回车继续！"
+	read
+	fi
+	chmod -R 0777 /etc/sysctl.conf && sysctl -p /etc/sysctl.conf
 }
 
 # 安装设置系统环境
@@ -259,6 +332,28 @@ fi
 
 }
 
+#安装Dnsmasq作为本地DNS服务器
+Install_Dnsmasq()
+{
+if [ ! -f /etc/dnsmasq.conf ]; then
+echo "警告！dnsmasq安装失败，搭建完成后请联系管理员修复，回车继续！"
+read
+fi
+rm -rf /etc/dnsmasq.conf
+wget -q ${Download_host}dnsmasq.conf -P /etc && chmod 0777 /etc/dnsmasq.conf
+if [ ! -f /etc/dnsmasq.conf ]; then
+echo "警告！Dnsmasq配置文件下载失败，搭建完成后请联系管理员修复，回车继续！"
+read
+fi
+systemctl start dnsmasq.service
+if [[ $? -eq 0 ]];then
+echo "Dnsmasq安装成功！"
+else
+echo "警告！Dnsmasq启动失败！搭建完成后请联系管理员修复，回车继续！"
+read
+fi
+}
+
 # 安装OpenVPN
 Install_OpenVPN()
 {
@@ -286,28 +381,6 @@ sed -i "s/newpass/"$zsykjsqlpass"/g" /etc/openvpn/auth_config.conf
 sed -i "s/服务器IP/"$IP"/g" /etc/openvpn/auth_config.conf
 }
 
-#安装Dnsmasq作为本地DNS服务器
-Install_Dnsmasq()
-{
-if [ ! -f /etc/dnsmasq.conf ]; then
-echo "警告！dnsmasq安装失败，搭建完成后请联系管理员修复，回车继续！"
-read
-fi
-rm -rf /etc/dnsmasq.conf
-wget -q ${Download_host}dnsmasq.conf -P /etc && chmod 0777 /etc/dnsmasq.conf
-if [ ! -f /etc/dnsmasq.conf ]; then
-echo "警告！Dnsmasq配置文件下载失败，搭建完成后请联系管理员修复，回车继续！"
-read
-fi
-systemctl start dnsmasq.service
-if [[ $? -eq 0 ]];then
-echo "Dnsmasq安装成功！"
-else
-echo "警告！Dnsmasq启动失败！搭建完成后请联系管理员修复，回车继续！"
-read
-fi
-}
-
 # 启动定时启动软件Crond
 Install_Crond()
 {
@@ -328,6 +401,35 @@ else
 echo "警告！Crond重启失败！搭建完成后请联系管理员修复，回车继续！"
 read
 fi
+}
+
+# 安装依赖文件
+Install_Dependency_file()
+{
+echo "正在安装依赖文件......"
+mkdir /etc/rate.d/ && chmod -R 0777 /etc/rate.d/
+cd /root
+wget -q ${Download_host}res.zip
+if [ ! -f /root/res.zip ]; then
+echo "警告！配置文件下载失败，脚本停止！"
+exit;0
+fi
+unzip -o res.zip >/dev/null 2>&1
+chmod -R 0777 /root && rm -rf /root/res.zip
+mv /root/res/fas.service /lib/systemd/system/fas.service
+chmod -R 0777 /lib/systemd/system/fas.service 
+systemctl enable fas.service
+cd /bin
+wget -q ${Download_host}bin.zip
+if [ ! -f /bin/bin.zip ]; then
+echo "警告！依赖文件下载失败，脚本停止！"
+exit;0
+fi
+unzip -o bin.zip >/dev/null 2>&1
+rm -rf /bin/bin.zip
+chmod -R 0777 /bin
+echo '#FAS系统自定义屏蔽host文件
+'>>/etc/fas_host && chmod 0777 /etc/fas_host
 }
 
 # 安装Web系统，数据库初始化
@@ -356,35 +458,6 @@ rm -rf /var/www/vpndata.sql
 sed -i "s/newpass/"$zsykjsqlpass"/g" /var/www/html/config.php
 # 设置随机的web本地密钥
 echo "$RANDOM$RANDOM">/var/www/auth_key.access
-}
-
-Install_Dependency_file()
-{
-# 安装依赖文件
-echo "正在安装依赖文件......"
-mkdir /etc/rate.d/ && chmod -R 0777 /etc/rate.d/
-cd /root
-wget -q ${Download_host}res.zip
-if [ ! -f /root/res.zip ]; then
-echo "警告！配置文件下载失败，脚本停止！"
-exit;0
-fi
-unzip -o res.zip >/dev/null 2>&1
-chmod -R 0777 /root && rm -rf /root/res.zip
-mv /root/res/fas.service /lib/systemd/system/fas.service
-chmod -R 0777 /lib/systemd/system/fas.service 
-systemctl enable fas.service
-cd /bin
-wget -q ${Download_host}bin.zip
-if [ ! -f /bin/bin.zip ]; then
-echo "警告！依赖文件下载失败，脚本停止！"
-exit;0
-fi
-unzip -o bin.zip >/dev/null 2>&1
-rm -rf /bin/bin.zip
-chmod -R 0777 /bin
-echo '#FAS系统自定义屏蔽host文件
-'>>/etc/fas_host && chmod 0777 /etc/fas_host
 }
 
 # 启动所有服务
@@ -473,9 +546,9 @@ dhclient
 vpn restart >/dev/null 2>&1
 }
 
+# 输出安装结果
 installation_is_complete()
 {
-# 输出安装结果
 unsql >/dev/null 2>&1
 password2=$(cat /var/www/auth_key.access);
 vpn restart
@@ -504,153 +577,44 @@ echo "---------------------------------------------"
 exit;0
 }
 
-Installation_options()
-{
-	# 接收用户自定义的信息
-	clear
-	echo
-	echo -e "\033[1;42;37m尊敬的用户您好，搭建FAS系统之前请您先自定义以下信息，如不会填写请直接回车默认即可！\033[0m"
-	echo
-	sleep 1
-	read -p "请设置后台账号(默认admin): " zsykjadminuser
-	if [ -z "$zsykjadminuser" ];then
-	zsykjadminuser=admin
-	fi
-	echo -e "已设置后台账号为:\033[32m "$zsykjadminuser"\033[0m"
-	
-	echo
-	read -p "请设置后台密码(默认随机): " zsykjadminpass
-	if [ -z "$zsykjadminpass" ];then
-	zsykjadminpass=`date +%s%N | md5sum | head -c 20 ; echo`;
-	fi
-	echo -e "已设置后台密码为:\033[32m "$zsykjadminpass"\033[0m"
-	
-	echo
-	read -p "请设置Apache端口(默认1024,禁用80): " zsykjApacheport
-	if [ -z "$zsykjApacheport" ];then
-	zsykjApacheport=1024
-	fi
-	echo -e "已设置Apache端口为:\033[32m http://"$IP":"$zsykjApacheport"\033[0m"
-	
-	echo
-	read -p "请设置MySQL密码(默认随机): " zsykjsqlpass
-	if [ -z "$zsykjsqlpass" ];then
-	zsykjsqlpass=`date +%s%N | md5sum | head -c 20 ; echo`;
-	fi
-	echo -e "已设置MySQL密码为:\033[32m "$zsykjsqlpass"\033[0m"
-	
-	sleep 1
-	echo
-	echo "请稍等..."
-	sleep 2
-	echo
-	echo -e "\033[1;5;31m所有信息已收集完成！即将为您安装FAS系统！\033[0m"
-	sleep 3
-	clear 
-	sleep 1
-	echo -e "\033[1;32m安装开始...\033[0m"
-	sleep 5 
-}
-
-Main()
-{
-# 主方法
-Anti-theft_detection
-Loading
-}
-
-# 加载：检查环境以及初始化
-Loading()
-{
-rm -rf $0 >/dev/null 2>&1
-clear 
-echo
-echo "正在检查安装环境(预计三分钟内完成)...."
-# 检测登录系统的账户和版本
-system_detection
-
-#安装wget curl等等  修复vr服务器没selinux问题
-yum -y install curl wget docker openssl net-tools procps-ng >/dev/null 2>&1
-# 判断机器架构类型
-Machine_detection
-}
-
-Home_page()
-{
-# 输出信息
-	clear
-	echo
-	echo -e "\033[1;35m本项目初始文件皆搜集自公开网络，仅供学习使用，切勿用于商业用途\033[0m "
-	echo -e "\033[1;36m安装后请于24小时内自行删除\033[0m "
-	echo -e "\033[1;34m再次声明：本项目仅可用于国内网络环境的虚拟加密访问，用于数据保密。严禁用于任何违法违规用途。\033[0m "
-	echo
-	echo 
-	echo -e "\033[1;36m回车开始搭建\033[0m "
-	read
-	sleep 1
-	echo -e "\033[1;32m正在载入信息.....\033[0m "
-	sleep 3
-	Get_IP
-}
-
+# 依次执行的方法
 Install_command()
 {
 	#变量安装命令
 	Installation_options
+	# 确定资源下载地址
 	Resource_download_address
+	# 替换yum源
 	replace_yum
+	# 关闭Selinux
 	Close_Selinux
+	# 修改防火墙设置
 	Install_firewall
+	# 修改系统设置
 	Install_Sysctl
+	# 安装设置系统环境
 	Install_System_environment
+	# 启动数据库
 	Install_MariaDB
+	# 启动Apache httpd和php
 	Install_Apache
+	#安装Dnsmasq作为本地DNS服务器
 	Install_Dnsmasq
+	# 安装OpenVPN
 	Install_OpenVPN
+	# 启动定时启动软件Crond
 	Install_Crond
+	# 安装依赖文件
 	Install_Dependency_file
+	# 安装Web系统，数据库初始化
 	Install_WEB
+	# 启动所有服务
 	Install_Startup_program
+	# 输出安装结果
 	installation_is_complete
 }
 
-Resource_download_address()
-{
-# 选择下载源
-clear;
-echo "*********************************************"
-echo "*            请选择FAS搭建模式              *"
-echo "*********************************************"
-echo
-echo "1、官方云数据中心（推荐）"
-echo 
-echo "2、阿里云数据中心（关闭）"
-echo
-echo "3、官方云数据中心2（试用）"
-echo
-read -p "请输入: " k
-echo
-if [[ $k == 1 ]];then
-Download_host='https://free.hehost.cn/shell/wget/fast/fas/';
-YUM_Choice='知速云';
-fi
-if [[ $k == 2 ]];then
-Download_host='';
-YUM_Choice='阿里云';
-fi
-if [[ $k == 3 ]];then
-Download_host='http://muzili.taokeml.top/fas/';
-YUM_Choice='逃课云';
-fi
-if [ -z "$Download_host" ];then
-echo
-echo -e "\033[31m输入错误！请重新运行脚本！\033[0m "
-exit;0
-fi
-
-sleep 3
-}
-
+# 获取本机IP和相应网卡
 Get_IP()
 {
 # 获取ip
@@ -711,6 +675,50 @@ echo -e "\033[31m输入错误！请重新运行脚本！\033[0m "
 exit;0
 }
 
+# 输出信息
+Home_page()
+{
+	clear
+	echo
+	echo -e "\033[1;35m本项目初始文件皆搜集自公开网络，仅供学习使用，切勿用于商业用途\033[0m "
+	echo -e "\033[1;36m安装后请于24小时内自行删除\033[0m "
+	echo -e "\033[1;34m再次声明：本项目仅可用于国内网络环境的虚拟加密访问，用于数据保密。严禁用于任何违法违规用途。\033[0m "
+	echo
+	echo
+	echo -e "\033[1;36m回车开始搭建\033[0m "
+	read
+	sleep 1
+	echo -e "\033[1;32m正在载入信息.....\033[0m "
+	sleep 3
+	Get_IP
+}
+
+# 判断机器架构类型
+Machine_detection()
+{
+# 安装用于判断系统架构的程序
+yum -y install virt-what >/dev/null 2>&1
+# 获取系统架构
+Framework=$( virt-what )
+# 判断系统架构
+if [ ${Framework} == "ovz"  -o ${Framework} == "openvz" ]; then
+	echo
+	echo "您当前机器架构为 OpenVZ 虚拟平台，暂不支持此架构机器安装此流控，可更换KVM、Hyper-V、VMware架构或物理机器后再次进行搭建操作！"
+	sleep 5
+	exit;0
+	else
+	echo "不等于${Framework}" >/dev/null 2>&1
+fi
+if [ ${Framework} == "kvm"  -o  ${Framework} == "hyperv"  -o  ${Framework} == "vmware"  -o  ${Framework} == "" ]; then
+	echo
+	echo "您当前机器架构为 ${Framework} 虚拟平台，符合系统安装环境！"
+	sleep 5
+	Home_page
+	else
+	echo ${Framework} >/dev/null 2>&1
+fi
+}
+
 # 系统检测：检测账户以及系统版本
 system_detection()
 {
@@ -753,17 +761,42 @@ exit 0;
 fi
 }
 
-Close_Selinux()
+# 加载：检查环境以及初始化
+Loading()
 {
-	echo "正在关闭Selinux....."
-	yum -y install docker
-	setenforce 0
-	if [ ! -f /etc/selinux/config ]; then
-	echo "警告！SELinux关闭失败，安装无法继续，请联系管理员修复！"
-	exit
-	fi
-	sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config	
+rm -rf $0 >/dev/null 2>&1
+clear
+echo
+echo "正在检查安装环境(预计三分钟内完成)...."
+# 检测登录系统的账户和版本
+system_detection
+
+#安装wget curl等等  修复vr服务器没selinux问题
+yum -y install curl wget docker openssl net-tools procps-ng >/dev/null 2>&1
+# 判断机器架构类型
+Machine_detection
+}
+
+Main()
+{
+# 主方法
+Anti-theft_detection
+Loading
 }
 # 执行主方法
 Main
-exit;0
+exit;0curl等等  修复vr服务器没selinux问题
+yum -y install curl wget docker openssl net-tools procps-ng >/dev/null 2>&1
+# 判断机器架构类型
+Machine_detection
+}
+
+Main()
+{
+# 主方法
+Anti-theft_detection
+Loading
+}
+# 执行主方法
+Main
+exit;00
