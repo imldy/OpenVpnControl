@@ -97,7 +97,7 @@ OpenVpn用户管理与流量控制。
 http_proxy=http://你的代理IP地址:端口
 https_proxy=https://你的代理IP地址:端口
 #不代理的ip/域名/主机列表
-no_proxy="127.0.0.1,localhost,mirrors.tencentyun.com"
+no_proxy="127.0.0.1,localhost,mirrors.tencentyun.com,members.3322.org"
 export http_proxy https_proxy no_proxy
 #若代理需要账号密码，则添加；（否则请省略以下；）
 proxy_username=你的代理的用户名
@@ -105,4 +105,4 @@ proxy_password=你的代理的密码
 export proxy_username proxy_password
 ```
 
-然后执行：`source /etc/profil` 即可生效。
+然后执行：`source /etc/profile` 即可生效。
