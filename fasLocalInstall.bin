@@ -54,32 +54,12 @@ Installation_options() {
 
 # 替换yum源
 replace_yum() {
-	if [[ ${YUM_Choice} == "China" ]]; then
-		echo "系统搭建方式等于China" >/dev/null 2>&1
-		echo "正在更新YUM源，更新速度取决于服务器宽带......"
-		sleep 5
-		mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo_bak
-		cp /root/OpenVpnControl/dependence/Centos-7.repo /etc/yum.repos.d/CentOS-Base.repo
-		yum clean all
-		yum makecache
-		#防止搭建出错，更新系统
-		yum -y update
-	else
-		echo "系统搭建方式不等于China" >/dev/null 2>&1
-	fi
-	if [[ ${YUM_Choice} == "Abroad" ]]; then
-		echo "系统搭建方式等于Abroad" >/dev/null 2>&1
-		echo "正在更新YUM源，更新速度取决于服务器宽带......"
-		sleep 5
-		mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo_bak
-		cp /root/OpenVpnControl/dependence/Centos-7.repo /etc/yum.repos.d/CentOS-Base.repo
-		yum clean all
-		yum makecache
-		#防止搭建出错，更新系统
-		yum -y update
-	else
-		echo "系统搭建方式不等于Abroad" >/dev/null 2>&1
-	fi
+	mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo_bak
+	cp /root/OpenVpnControl/dependence/Centos-7.repo /etc/yum.repos.d/CentOS-Base.repo
+	yum clean all
+	yum makecache
+	#防止搭建出错，更新系统
+	yum -y update
 }
 
 # 关闭Selinux
