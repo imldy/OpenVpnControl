@@ -46,18 +46,10 @@ Installation_options() {
 		)
 	fi
 	echo -e "已设置MySQL密码为:\033[32m "$zsykjsqlpass"\033[0m"
-
-	sleep 1
-	echo
-	echo "请稍等..."
-	sleep 2
-	echo
 	echo -e "\033[1;5;31m所有信息已收集完成！即将为您安装FAS系统！\033[0m"
 	sleep 3
 	clear
-	sleep 1
 	echo -e "\033[1;32m安装开始...\033[0m"
-	sleep 5
 }
 
 # 替换yum源
@@ -583,15 +575,9 @@ Get_IP() {
 		wangka1=$(ifconfig)
 		wangka2=$(echo $wangka1 | awk '{print $1}')
 		wangka=${wangka2/:/}
-		clear
-		sleep 1
-		echo
 		echo -e "系统检测到的IP为：\033[34m"$IP" "$dizhi""$fwq"，网卡为："$wangka"\033[0m"
 		echo -e "如不正确请立即停止安装选择手动输入IP搭建，否则回车继续。"
 		read
-		sleep 1
-		echo "请稍等..."
-		sleep 3
 		Install_command
 	fi
 	if [[ $k == 2 ]]; then
@@ -604,16 +590,8 @@ Get_IP() {
 		if [ -z "$wangka" ]; then
 			wangka=
 		fi
-		echo "请稍等..."
-		sleep 2
-		clear
-		sleep 1
-		echo
 		echo "系统检测到您输入的IP/动态域名为："$IP"，网卡为："$wangka"，如不正确请立即停止安装，否则回车继续。"
 		read
-		sleep 1
-		echo "请稍等..."
-		sleep 3
 		Install_command
 	fi
 	echo -e "\033[31m输入错误！请重新运行脚本！\033[0m "
@@ -624,13 +602,10 @@ Get_IP() {
 # 输出信息
 Home_page() {
 	clear
-	echo
 	echo -e "\033[1;35m————OpenVpnControl本地模式安装————\033[0m "
 	echo -e "\033[1;35m本项目初始文件皆搜集自公开网络，仅供学习使用，切勿用于商业用途\033[0m "
 	echo -e "\033[1;36m安装后请于24小时内自行删除\033[0m "
 	echo -e "\033[1;34m再次声明：本项目仅可用于国内网络环境的虚拟加密访问，用于数据保密。严禁用于任何违法违规用途。\033[0m "
-	echo
-	echo
 	echo -e "\033[1;36m回车开始搭建\033[0m "
 	read
 	sleep 1
@@ -649,7 +624,6 @@ Machine_detection() {
 	if [ ${Framework} == "ovz" -o ${Framework} == "openvz" ]; then
 		echo
 		echo "您当前机器架构为 OpenVZ 虚拟平台，暂不支持此架构机器安装此流控，可更换KVM、Hyper-V、VMware架构或物理机器后再次进行搭建操作！"
-		sleep 5
 		exit
 		0
 	else
@@ -658,7 +632,6 @@ Machine_detection() {
 	if [ ${Framework} == "kvm" -o ${Framework} == "hyperv" -o ${Framework} == "vmware" -o ${Framework} == "" ]; then
 		echo
 		echo "您当前机器架构为 ${Framework} 虚拟平台，符合系统安装环境！"
-		sleep 5
 		Home_page
 	else
 		echo ${Framework} >/dev/null 2>&1
@@ -668,19 +641,14 @@ Machine_detection() {
 # 系统检测：检测账户以及系统版本
 system_detection() {
 	if [[ "$EUID" -ne 0 ]]; then
-		sleep 3
-		echo
 		echo "致命错误，您需要以root身份运行此脚本！"
 		exit 0
 	fi
 	if [[ ! -e /dev/net/tun ]]; then
-		sleep 3
-		echo
 		echo "致命错误，TUN不可用，安装无法继续！"
 		exit 0
 	fi
 	if [ ! -e "/dev/net/tun" ]; then
-		echo
 		echo -e "\033[1;32m安装出错\033[0m \033[5;31m[原因：系统存在异常！]\033[0m 
 	\033[1;32m错误码：\033[31mVFVOL1RBUOiZmuaLn+e9keWNoeS4jeWtmOWcqA== \033[0m\033[0m"
 		exit 0
@@ -688,19 +656,16 @@ system_detection() {
 	if [ -f /etc/os-release ]; then
 		OS_VERSION=$(cat /etc/os-release | awk -F'[="]+' '/^VERSION_ID=/ {print $2}')
 		if [ $OS_VERSION != "7" ]; then
-			echo
 			echo "-bash: "$0": 致命错误，系统环境异常，当前系统为：CentOS "$OS_VERSION" ，请更换系统为 CentOS 7.0 - 7.4 后重试！"
 			exit 0
 		fi
 	elif [ -f /etc/redhat-release ]; then
 		OS_VERSION=$(cat /etc/redhat-release | grep -Eos '\b[0-9]+\S*\b' | cut -d'.' -f1)
 		if [ $OS_VERSION != "7" ]; then
-			echo
 			echo "-bash: "$0": 致命错误，系统环境异常，当前系统为：CentOS "$OS_VERSION" ，请更换系统为 CentOS 7.0 - 7.4后重试！"
 			exit 0
 		fi
 	else
-		echo
 		echo "-bash: "$0": 致命错误，系统环境异常，当前系统为：CentOS 未知 ，请更换系统为 CentOS 7.0 - 7.4 后重试！"
 		exit 0
 	fi
@@ -710,7 +675,6 @@ system_detection() {
 Loading() {
 	rm -rf $0 >/dev/null 2>&1
 	clear
-	echo
 	echo "正在检查安装环境(预计三分钟内完成)...."
 	# 检测登录系统的账户和版本
 	system_detection
