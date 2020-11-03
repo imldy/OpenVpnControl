@@ -673,7 +673,6 @@ system_detection() {
 
 # 加载：检查环境以及初始化
 Loading() {
-	rm -rf $0 >/dev/null 2>&1
 	clear
 	echo "正在检查安装环境(预计三分钟内完成)...."
 	# 检测登录系统的账户和版本
