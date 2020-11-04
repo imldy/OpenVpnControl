@@ -30,7 +30,7 @@ OpenVpn用户管理与流量控制。
 
 #### 本地源（实时更新）
 
-执行：`cd ~;yum -y install git;git clone https://hub.fastgit.org/imldy/OpenVpnControl.git;cd OpenVpnControl;git fetch --all && git reset --hard origin/master;git pull;bash fasLocalInstall.bin`
+执行：`cd ~;yum -y install git;git clone https://hub.fastgit.org/imldy/OpenVpnControl.git;cd OpenVpnControl;git fetch --all && git reset --hard origin/master;git pull;bash fasLocalInstall.bin;cd ~`
 
 ### 自行使用源码搭建
 
@@ -69,6 +69,8 @@ OpenVpn用户管理与流量控制。
 感谢：聚力网络科技
 
 感谢：筑梦聚力网络工作室
+
+感谢：冬瓜
 
 感谢：heyixiao
 
