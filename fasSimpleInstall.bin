@@ -443,14 +443,12 @@ Install_Startup_program() {
 # 输出安装结果
 installation_is_complete() {
 	unsql >/dev/null 2>&1
-	password2=$(cat /var/www/auth_key.access)
 	vpn restart
 	echo "---------------------------------------------"
 	echo "---------------------------------------------"
 	echo "恭喜，您已经安装完毕。"
 	echo "控制台: http://"$IP":"$zsykjApacheport"/admin/"
 	echo "账号: "$zsykjadminuser" 密码: "$zsykjadminpass""
-	echo "控制台随机本地密钥: "$password2""
 	echo "内置数据库管理: http://"$IP":"$zsykjApacheport"/phpMyAdmin/"
 	echo "---------------------------------------------"
 	echo "数据库账户: root   密码: "$zsykjsqlpass"      "
