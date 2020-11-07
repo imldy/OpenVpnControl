@@ -11,23 +11,23 @@ function stop_fas_service(){
 
 function start_proxy()
 {
-	printf "%-70s" "Start Proxy"
-	cat /root/res/portlist.conf | while read line
+	printf "%-70s" "开启代理|Start Proxy"
+	cat /root/res/portlist.conf|while read line
 	do
-		port=`echo $line | cut -d \  -f 2`
+		port=`echo $line|cut -d \  -f 2`
 		/root/res/proxy.bin -l $port -d >/dev/null 2>&1
 	done
 	echo -e "[ \033[32m done \033[0m ]"
 	
-	printf "%-70s"  "Start Monitor"
+	printf "%-70s"  "开启监控|Start Monitor"
 	/bin/jk.sh &  >/dev/null 2>&1
 	echo -e "[ \033[32m done \033[0m ]"
 	
-	printf "%-70s"  "Start FasAUTH"
+	printf "%-70s"  "开启FasAUTH|Start FasAUTH"
 	/bin/FasAUTH.bin -c "/etc/openvpn/auth_config.conf" >/dev/null 2>&1
 	echo -e "[ \033[32m done \033[0m ]"
 	
-	printf "%-70s"  "Start OpenVPN Proxy"
+	printf "%-70s"  "开启OpenVPN代理|Start OpenVPN Proxy"
 	/bin/openvpn.bin -l 443 -d >/dev/null 2>&1
 	/bin/openvpn.bin -l 3389 -d >/dev/null 2>&1
 	echo -e "[ \033[32m done \033[0m ]"
@@ -36,19 +36,19 @@ function start_proxy()
 
 function stop_proxy()
 {
-	printf "%-70s"  "Stop proxy"
+	printf "%-70s"  "停止代理|Stop proxy"
 	killall -9 proxy.bin >/dev/null 2>&1
 	echo -e "[ \033[32m done \033[0m ]"
 	
-	printf "%-70s"  "Stop Monitor"
+	printf "%-70s"  "停止监控|Stop Monitor"
 	killall -9 jk.sh >/dev/null 2>&1
 	echo -e "[ \033[32m done \033[0m ]"
 	
-	printf "%-70s"  "Stop FasAUTH"
+	printf "%-70s"  "停止FasAUTH|Stop FasAUTH"
 	killall -9 FasAUTH.bin >/dev/null 2>&1
 	echo -e "[ \033[32m done \033[0m ]"
 	
-	printf "%-70s"  "Stop OpenVPN Proxy"	
+	printf "%-70s"  "停止OpenVPN代理|Stop OpenVPN Proxy"
 	killall openvpn.bin >/dev/null 2>&1
 	echo -e "[ \033[32m done \033[0m ]"	
 	return
@@ -80,15 +80,15 @@ function restart(){
 	echo -e ""
 	
 	(stop_proxy)
-	printf "%-70s"  "Restart mariadb"
+	printf "%-70s"  "重启mariadb数据库|Restart mariadb"
 	systemctl restart mariadb.service
 	echo -e "[ \033[32m done \033[0m ]"
 	
-	printf "%-70s"  "Restart Apache"
+	printf "%-70s"  "重启Apache|Restart Apache"
 	systemctl restart httpd.service
 	echo -e "[ \033[32m done \033[0m ]"
 	
-	printf "%-70s"  "Restart OpenVPN"
+	printf "%-70s"  "重启OpenVPN|Restart OpenVPN"
 	systemctl restart openvpn@server1194
 	systemctl restart openvpn@server1195
 	systemctl restart openvpn@server1196
@@ -96,15 +96,15 @@ function restart(){
 	systemctl restart openvpn@server-udp
 	echo -e "[ \033[32m done \033[0m ]"
 	
-	printf "%-70s"  "Restart iptables"
+	printf "%-70s"  "重启iptables|Restart iptables"
 	systemctl restart iptables.service
 	echo -e "[ \033[32m done \033[0m ]"
 
-	printf "%-70s"  "Restart dnsmasq"
+	printf "%-70s"  "重启dnsmasq|Restart dnsmasq"
 	systemctl restart dnsmasq.service
 	echo -e "[ \033[32m done \033[0m ]"
 	
-	printf "%-70s"  "Restart crond"
+	printf "%-70s"  "重启dnsmasq|Restart crond"
 	systemctl restart crond.service
 	echo -e "[ \033[32m done \033[0m ]"
 	
