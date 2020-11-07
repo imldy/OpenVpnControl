@@ -16,7 +16,6 @@ Installation_options() {
 # 关闭Selinux
 Close_Selinux() {
 	echo "正在关闭Selinux....."
-	yum -y install docker
 	setenforce 0
 	if [ ! -f /etc/selinux/config ]; then
 		echo "警告！SELinux关闭失败，安装无法继续，请联系管理员修复！"
