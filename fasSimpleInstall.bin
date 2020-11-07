@@ -183,8 +183,6 @@ Install_OpenVPN() {
 	cp -r /root/OpenVpnControl/dependence/openvpn/. /etc/openvpn/
 
 	chmod 0777 -R /etc/openvpn
-
-	sed -i "s/服务器IP/"$IP"/g" /etc/openvpn/auth_config.conf
 }
 
 # 启动定时启动软件Crond
