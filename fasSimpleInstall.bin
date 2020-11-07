@@ -181,11 +181,6 @@ Install_OpenVPN() {
 	cd /etc/openvpn && rm -rf /etc/openvpn/*
 	# 配置文件移入对应文件
 	cp -r /root/OpenVpnControl/dependence/openvpn/. /etc/openvpn/
-	if [ ! -f /etc/openvpn/auth_config.conf ]; then
-		echo "警告！OpenVPN配置文件下载失败，脚本停止！"
-		exit
-		0
-	fi
 
 	chmod 0777 -R /etc/openvpn
 
