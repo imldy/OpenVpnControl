@@ -9,20 +9,6 @@ rm -rf /bin/heyixiao
 
 # 接收用户自定义的信息
 Installation_options() {
-	echo -e "\033[1;42;37m尊敬的用户您好，搭建FAS系统之前请您先自定义以下信息，如不会填写请直接回车默认即可！\033[0m"
-	read -p "请设置后台账号(默认admin): " zsykjadminuser
-	if [ -z "$zsykjadminuser" ]; then
-		zsykjadminuser=admin
-	fi
-	echo -e "已设置后台账号为:\033[32m "$zsykjadminuser"\033[0m"
-	read -p "请设置后台密码(默认随机): " zsykjadminpass
-	if [ -z "$zsykjadminpass" ]; then
-		zsykjadminpass=$(
-			date +%s%N | md5sum | head -c 20
-			echo
-		)
-	fi
-	echo -e "已设置后台密码为:\033[32m "$zsykjadminpass"\033[0m"
 	read -p "请设置Apache端口(默认1024,禁用80): " zsykjApacheport
 	if [ -z "$zsykjApacheport" ]; then
 		zsykjApacheport=1024
