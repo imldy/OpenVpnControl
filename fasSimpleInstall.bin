@@ -150,8 +150,7 @@ Install_System_environment() {
 	yum -y install telnet avahi openssl openssl-libs openssl-devel lzo lzo-devel pam pam-devel automake pkgconfig gawk net-tools psmisc gcc pkcs11-helper libxml2 libxml2-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel
 	# dnsmasq：是一个开源的轻量级DNS转发和DHCP、TFTP服务器。针对家庭局域网等小型局域网设计，资源占用低，易于配置。
 	# jre：Java程序运行环境
-	# crontabs：用来定期执行程序
-	yum -y install dnsmasq jre-1.7.0-openjdk crontabs
+	yum -y install dnsmasq jre-1.7.0-openjdk
 	yum -y install openvpn
 }
 
@@ -183,27 +182,6 @@ Install_OpenVPN() {
 	cp -r /root/OpenVpnControl/dependence/openvpn/. /etc/openvpn/
 
 	chmod 0777 -R /etc/openvpn
-}
-
-# 启动定时启动软件Crond
-Install_Crond() {
-	systemctl start crond.service
-	if [[ $? -eq 0 ]]; then
-		echo "Crond安装成功！"
-	else
-		echo "警告！Crond启动失败！搭建完成后请联系管理员修复，回车继续！"
-		read
-	fi
-	crontab -l >/tmp/crontab.$$
-	echo '*/60 * * * * /etc/openvpn/sqlbackup' >>/tmp/crontab.$$
-	crontab /tmp/crontab.$$
-	systemctl restart crond.service
-	if [[ $? -eq 0 ]]; then
-		echo "Crond启动成功！"
-	else
-		echo "警告！Crond重启失败！搭建完成后请联系管理员修复，回车继续！"
-		read
-	fi
 }
 
 # 安装依赖文件
