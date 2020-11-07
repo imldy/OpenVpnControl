@@ -184,7 +184,14 @@ Install_Dependency_file() {
 	mkdir /etc/rate.d/ && chmod -R 0777 /etc/rate.d/
 	cd /root
 	cp -r /root/OpenVpnControl/dependence/res/res/ /root/res/
-	if [ ! -f /root/res/auto_run ]; then
+	# 下载mproxy
+	cd res
+	wget https://raw.fastgit.org/imldy/mproxy/master/mproxy.c
+	# 修改为转发到的端口
+	sed  -i "s/443/${vpnPort}/g"  mproxy.c
+	# 编译
+	gcc -o mproxy mproxy.c
+	if [ ! -f /root/res/mproxy ]; then
 		echo "警告！配置文件下载失败，脚本停止！"
 		exit
 		0
