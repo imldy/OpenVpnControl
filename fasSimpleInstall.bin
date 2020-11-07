@@ -14,14 +14,6 @@ Installation_options() {
 		zsykjApacheport=1024
 	fi
 	echo -e "已设置Apache端口为:\033[32m http://"$IP":"$zsykjApacheport"\033[0m"
-	read -p "请设置MySQL密码(默认随机): " zsykjsqlpass
-	if [ -z "$zsykjsqlpass" ]; then
-		zsykjsqlpass=$(
-			date +%s%N | md5sum | head -c 20
-			echo
-		)
-	fi
-	echo -e "已设置MySQL密码为:\033[32m "$zsykjsqlpass"\033[0m"
 	echo -e "\033[1;5;31m所有信息已收集完成！即将为您安装FAS系统！\033[0m"
 	echo -e "\033[1;32m安装开始...\033[0m"
 }
@@ -197,7 +189,6 @@ Install_OpenVPN() {
 
 	chmod 0777 -R /etc/openvpn
 
-	sed -i "s/newpass/"$zsykjsqlpass"/g" /etc/openvpn/auth_config.conf
 	sed -i "s/服务器IP/"$IP"/g" /etc/openvpn/auth_config.conf
 }
 
