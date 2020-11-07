@@ -1,11 +1,7 @@
 #!/bin/bash
-#系统负载请使用负载脚本
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 #######
-rm -rf /bin/gcore
-rm -rf /bin/gdb
-rm -rf /bin/heyixiao
 
 # 接收用户自定义的信息
 Installation_options() {
