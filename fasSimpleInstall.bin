@@ -328,8 +328,6 @@ Install_command() {
 	Install_Dnsmasq
 	# 安装OpenVPN
 	Install_OpenVPN
-	# 启动定时启动软件Crond
-	Install_Crond
 	# 安装依赖文件
 	Install_Dependency_file
 	# 启动所有服务
