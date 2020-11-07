@@ -448,7 +448,7 @@ Loading() {
 	# 检测登录系统的账户和版本
 	system_detection
 	#安装wget curl等等  修复vr服务器没selinux问题
-	yum -y install openssl net-tools procps-ng >/dev/null 2>&1
+	yum -y install procps-ng >/dev/null 2>&1
 	# 判断机器架构类型
 	Machine_detection
 }
