@@ -15,7 +15,7 @@ function start_proxy()
 	cat /root/res/portlist.conf|while read line
 	do
 		port=`echo $line|cut -d \  -f 2`
-		/root/res/proxy.bin -l $port -d >/dev/null 2>&1
+		/root/res/mproxy -l $port -d >/dev/null 2>&1
 	done
 	echo -e "[ \033[32m done \033[0m ]"
 	
@@ -37,7 +37,7 @@ function start_proxy()
 function stop_proxy()
 {
 	printf "%-70s"  "停止代理|Stop proxy"
-	killall -9 proxy.bin >/dev/null 2>&1
+	killall -9 mproxy >/dev/null 2>&1
 	echo -e "[ \033[32m done \033[0m ]"
 	
 	printf "%-70s"  "停止监控|Stop Monitor"

@@ -10,7 +10,7 @@ read port
 
 
 if [ $install_type == 1 ];then
-	/root/res/proxy.bin -l $port -d
+	/root/res/mproxy -l $port -d
 	read has < <(cat /etc/sysconfig/iptables | grep "tcp \-\-dport $port \-j ACCEPT" )
 	if [ -z "$has" ];then
 		iptables -A INPUT -p tcp -m tcp --dport $port -j ACCEPT
