@@ -197,58 +197,6 @@ Install_System_environment() {
 	yum -y install openvpn
 }
 
-# 启动数据库
-Install_MariaDB() {
-	systemctl start mariadb.service
-	if [[ $? -eq 0 ]]; then
-		echo "MariaDB安装成功！"
-	else
-		echo "警告！MariaDB初始化失败！请联系管理员修复！脚本停止！"
-		exit
-		0
-	fi
-
-	mysqladmin -uroot password "$zsykjsqlpass"
-	mysql -uroot -p$zsykjsqlpass -e "create database vpndata;"
-
-	systemctl restart mariadb.service
-	if [[ $? -eq 0 ]]; then
-		echo "MariaDB重启成功！"
-	else
-		echo "警告！MariaDB重启失败！请联系管理员修复！脚本停止！"
-		exit
-		0
-	fi
-}
-
-# 启动Apache httpd和php
-Install_Apache() {
-
-	sed -i "s/#ServerName www.example.com:80/ServerName localhost:$zsykjApacheport/g" /etc/httpd/conf/httpd.conf
-	sed -i "s/Listen 80/Listen $zsykjApacheport/g" /etc/httpd/conf/httpd.conf
-	cat >>/etc/php.ini <<EOF
-extension=php_mcrypt.dll
-extension=php_mysqli.dll
-EOF
-
-	#systemctl start httpd.service
-	#if [[ $? -eq 0 ]]; then
-	#	echo "Apache安装成功！"
-	#else
-	#	echo "警告！Apache启动失败！搭建完成后请联系管理员修复，回车继续！"
-	#	read
-	#fi
-
-	#systemctl start php-fpm.service
-	#if [[ $? -eq 0 ]]; then
-	#	echo "PHP安装成功！"
-	#else
-	#	echo "警告！PHP启动失败！搭建完成后请联系管理员修复，回车继续！"
-	#	read
-	#fi
-
-}
-
 #安装Dnsmasq作为本地DNS服务器
 Install_Dnsmasq() {
 	if [ ! -f /etc/dnsmasq.conf ]; then
@@ -459,10 +407,6 @@ Install_command() {
 	Install_Sysctl
 	# 安装设置系统环境
 	Install_System_environment
-	# 启动数据库
-	#Install_MariaDB
-	# 启动Apache httpd和php
-	#Install_Apache
 	#安装Dnsmasq作为本地DNS服务器
 	Install_Dnsmasq
 	# 安装OpenVPN
