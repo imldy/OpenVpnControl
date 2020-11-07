@@ -5,11 +5,11 @@ export PATH
 
 # 接收用户自定义的信息
 Installation_options() {
-	read -p "请设置Apache端口(默认1024,禁用80): " zsykjApacheport
-	if [ -z "$zsykjApacheport" ]; then
-		zsykjApacheport=1024
+	read -p "请设置OpenVPN监听端口(默认1194): " vpnPort
+	if [ -z "$vpnPort" ]; then
+		vpnPort=1194
 	fi
-	echo -e "已设置Apache端口为:\033[32m $zsykjApacheport \033[0m"
+	echo -e "已设置OpenVPN监听端口为:\033[32m $vpnPort \033[0m"
 	echo -e "\033[1;32m安装开始...\033[0m"
 }
 
@@ -45,7 +45,7 @@ Install_firewall() {
 	iptables -A INPUT -s 127.0.0.1/32 -j ACCEPT
 	iptables -A INPUT -d 127.0.0.1/32 -j ACCEPT
 	iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
-	iptables -A INPUT -p tcp -m tcp --dport $zsykjApacheport -j ACCEPT
+	iptables -A INPUT -p tcp -m tcp --dport $vpnPort -j ACCEPT
 	iptables -A INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
 	iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 	iptables -A INPUT -p tcp -m tcp --dport 27972 -j ACCEPT #搬瓦工端口
