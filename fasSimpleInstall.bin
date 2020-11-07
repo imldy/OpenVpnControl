@@ -212,24 +212,6 @@ Install_Startup_program() {
 	else
 		echo "警告！Iptables启动失败！请联系管理员修复！"
 	fi
-	#systemctl restart mariadb.service
-	#if [[ $? -eq 0 ]]; then
-	#	echo "MariaDB启动成功！"
-	#else
-	#	echo "警告！MariaDB启动失败！请联系管理员修复！"
-	#fi
-	#systemctl restart httpd.service
-	#if [[ $? -eq 0 ]]; then
-	#	echo "Apache启动成功！"
-	#else
-	#	echo "警告！Apache启动失败！请联系管理员修复！！"
-	#fi
-	#systemctl restart php-fpm.service
-	#if [[ $? -eq 0 ]]; then
-	#	echo "PHP启动成功！"
-	#else
-	#	echo "警告！PHP启动失败！请联系管理员修复！"
-	#fi
 	systemctl restart dnsmasq.service
 	if [[ $? -eq 0 ]]; then
 		echo "Dnsmasq启动成功！"
