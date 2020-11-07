@@ -13,8 +13,7 @@ Installation_options() {
 	if [ -z "$zsykjApacheport" ]; then
 		zsykjApacheport=1024
 	fi
-	echo -e "已设置Apache端口为:\033[32m http://"$IP":"$zsykjApacheport"\033[0m"
-	echo -e "\033[1;5;31m所有信息已收集完成！即将为您安装FAS系统！\033[0m"
+	echo -e "已设置Apache端口为:\033[32m $zsykjApacheport \033[0m"
 	echo -e "\033[1;32m安装开始...\033[0m"
 }
 
